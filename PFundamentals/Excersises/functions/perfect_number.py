@@ -8,6 +8,7 @@ def perfect_number(n):
     else:
         return False
 
+
 number = int(input())
 if perfect_number(number):
     print("We have a perfect number!")
