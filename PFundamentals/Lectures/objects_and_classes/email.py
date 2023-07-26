@@ -17,4 +17,14 @@ emails = []
 data = input()
 
 while data != 'Stop':
+    sender, receiver, content = data.split()
+    email = Email(sender, receiver, content)
+    emails.append(email)
     data = input()
+
+indexes_of_emails_to_be_sent = [int(el) for el in input().split(", ")]
+
+for index, email in enumerate(emails):
+    if index in indexes_of_emails_to_be_sent:
+        emails[index].send()
+    print(f'{email.sender} says to {email.receiver}: {email.content}. Sent: {email.is_sent}')
