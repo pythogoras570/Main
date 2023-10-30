@@ -15,7 +15,7 @@ def print_reverse_triangle(n):
 
 def create_rhombus(n):
     print_triangle(n)
-    print_reverse_triangle()
+    print_reverse_triangle(n)
 
 
 create_rhombus(int(input()))
