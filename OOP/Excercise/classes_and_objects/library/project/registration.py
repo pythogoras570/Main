@@ -1,5 +1,5 @@
-from user import User
-from library import Library
+from project.user import User
+from project.library import Library
 
 
 class Registration:
@@ -24,7 +24,8 @@ class Registration:
         for u in library.user_records:
             if u.user_id == user_id:
                 if u.username == new_username:
-                    return "Please check again the provided username - it should be different than the username used so far!"
-                 u.username = new_username
+                    return ("Please check again the provided username - it should be different than the username used "
+                            "so far!")
+                    u.username = new_username
                 return f"Username successfully changed to: {new_username} for user id: {user_id}"
         return f"There is no user with id = {user_id}!"
