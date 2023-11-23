@@ -5,7 +5,7 @@ class Topping:
 
     @property
     def topping_type(self):
-        return self.topping_type
+        return self.__topping_type
 
     @topping_type.setter
     def topping_type(self, value):
@@ -15,7 +15,7 @@ class Topping:
 
     @property
     def weight(self):
-        return self.weight
+        return self.__weight
 
     @weight.setter
     def weight(self, value):

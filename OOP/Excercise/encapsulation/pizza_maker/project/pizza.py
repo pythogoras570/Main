@@ -1,4 +1,5 @@
 from project.dough import Dough
+from project.topping import Topping
 
 
 class Pizza:
@@ -6,7 +7,7 @@ class Pizza:
         self.name = name
         self.dough = dough
         self.max_number_of_toppings = max_number_of_toppings
-        self.toppings = dict(toppings)
+        self.toppings = {}
 
     @property
     def name(self):
@@ -16,15 +17,17 @@ class Pizza:
     def name(self, value):
         if value == "":
             raise ValueError("The name cannot be an empty string")
-        value = self.__name
+        self.__name = value
 
     @property
     def dough(self):
-        return
+        return self.__dough
 
     @dough.setter
     def dough(self, value):
-        pass
+        if value is None:
+            raise ValueError("You should add dough to the pizza")
+        self.__dough = value
 
     @property
     def max_number_of_toppings(self):
@@ -34,12 +37,15 @@ class Pizza:
     def max_number_of_toppings(self, value):
         if value <= 0:
             raise ValueError('The maximum number of toppings cannot be less or equal to zero')
-        value = self.max_number_of_toppings
+        self.max_number_of_toppings = value
 
-    @property
-    def toppings(self):
-        return
+    def add_topping(self, topping: Topping):
+        if len(self.toppings) == self.max_number_of_toppings:
+            raise ValueError('Not enough space for another topping')
+        if topping.topping_type in self.toppings:
+            self.toppings[topping.topping_type] += topping.weight
+            return
+        self.toppings[topping.topping_type] = topping.weight
 
-    @toppings.setter
-    def toppings(self, value):
-        pass
+    def calculate_total_weight(self):
+        return self.dough.weight + sum(self.toppings.values())
