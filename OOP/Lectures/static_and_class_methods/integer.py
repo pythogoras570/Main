@@ -9,7 +9,7 @@ class Integer:
         return cls(int(float_value))
 
     @staticmethod
-    def from_roman(cls, roman_number):
+    def from_roman(roman_number):
         roman_numerals = {
             'I': 1,
             'V': 5,
@@ -26,10 +26,12 @@ class Integer:
                     int_value -= roman_numerals[roman_number[i]]
                 else:
                     int_value += roman_numerals[roman_number[i]]
-        return cls(int_value)
+        return int_value
 
     @staticmethod
     def from_string(cls, value):
+        if not isinstance(value, str):
+            return "wrong type"
         try:
             return cls(int(value))
         except ValueError:
