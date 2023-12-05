@@ -5,5 +5,5 @@ class DVD:
         self.creation_year = creation_year
         self.creation_month = creation_month
         self.age_restriction = age_restriction
-
+        self.is_rented = False
 
