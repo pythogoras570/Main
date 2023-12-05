@@ -3,7 +3,7 @@ class PhotoAlbum:
         self.pages = pages
         self.photos = []
 
-    def from_photos_count(self, photos_count: int):
+    def from_photos_count(cls, photos_count: int):
         pass
 
     def add_photo(self, label: str):
