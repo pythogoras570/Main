@@ -1,4 +1,6 @@
 from project.divers.free_diver import FreeDiver
+from project.divers.scuba_diver import ScubaDiver
+from project.fish.deep_sea_fish import DeepSeaFish
 from project.fish.predatory_fish import PredatoryFish
 
 
@@ -8,50 +10,50 @@ class NauticalCatchChallengeApp:
         self.fish_list = []
 
     def dive_into_competition(self, diver_type: str, diver_name: str):
-        valid_diver_types = ["FreeDiver", "ScubaDiver"]
-
-        if diver_type not in valid_diver_types:
+        # Check if the diver type is valid
+        if diver_type not in ["FreeDiver", "ScubaDiver"]:
             return f"{diver_type} is not allowed in our competition."
 
-        for diver in self.divers:
-            if diver.name == diver_name:
-                return f"{diver_name} is already a participant."
+        # Check if the diver with the same name is already registered
+        if any(diver.name == diver_name for diver in self.divers):
+            return f"{diver_name} is already a participant."
 
+        # Create the diver based on the given type
         if diver_type == "FreeDiver":
-            diver = FreeDiver(diver_name)
-        else:
-            # Handle ScubaDiver creation if needed
-            pass
+            new_diver = FreeDiver(diver_name)
+        elif diver_type == "ScubaDiver":
+            new_diver = ScubaDiver(diver_name)
 
-        self.divers.append(diver)
+        # Register the diver
+        self.divers.append(new_diver)
         return f"{diver_name} is successfully registered for the competition as a {diver_type}."
 
     def swim_into_competition(self, fish_type: str, fish_name: str, points: float):
-        valid_fish_types = ["PredatoryFish", "DeepSeaFish"]
-
-        if fish_type not in valid_fish_types:
+        # Check if the fish type is valid
+        if fish_type not in ["PredatoryFish", "DeepSeaFish"]:
             return f"{fish_type} is forbidden for chasing in our competition."
 
-        for fish in self.fish_list:
-            if fish.name == fish_name:
-                return f"{fish_name} is already permitted."
+        # Check if the fish with the same name is already registered
+        if any(fish.name == fish_name for fish in self.fish_list):
+            return f"{fish_name} is already permitted."
 
+        # Create the fish based on the given type
         if fish_type == "PredatoryFish":
-            fish = PredatoryFish(fish_name, points)
-        else:
-            # Handle DeepSeaFish creation if needed
-            pass
+            new_fish = PredatoryFish(fish_name, points)
+        elif fish_type == "DeepSeaFish":
+            new_fish = DeepSeaFish(fish_name, points)
 
-        self.fish_list.append(fish)
+        # Register the fish
+        self.fish_list.append(new_fish)
         return f"{fish_name} is allowed for chasing as a {fish_type}."
 
     def chase_fish(self, diver_name: str, fish_name: str, is_lucky: bool):
         diver = next((diver for diver in self.divers if diver.name == diver_name), None)
-        if diver is None:
+        if not diver:
             return f"{diver_name} is not registered for the competition."
 
         fish = next((fish for fish in self.fish_list if fish.name == fish_name), None)
-        if fish is None:
+        if not fish:
             return f"The {fish_name} is not allowed to be caught in this competition."
 
         if diver.has_health_issue:
@@ -59,6 +61,8 @@ class NauticalCatchChallengeApp:
 
         if diver.oxygen_level < fish.time_to_catch:
             diver.miss(fish.time_to_catch)
+            if diver.oxygen_level == 0:
+                diver.update_health_status()
             return f"{diver_name} missed a good {fish_name}."
 
         if diver.oxygen_level == fish.time_to_catch:

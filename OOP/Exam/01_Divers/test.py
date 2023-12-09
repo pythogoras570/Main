@@ -1,8 +1,4 @@
 from project.nautical_catch_challenge_app import NauticalCatchChallengeApp
-from project.divers.free_diver import FreeDiver
-from project.divers.scuba_diver import ScubaDiver
-from project.fish.predatory_fish import PredatoryFish
-from project.fish.deep_sea_fish import DeepSeaFish
 
 nautical_catch_challenge = NauticalCatchChallengeApp()
 

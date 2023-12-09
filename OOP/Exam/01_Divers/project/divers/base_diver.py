@@ -4,19 +4,31 @@ from project.fish.base_fish import BaseFish
 
 class BaseDiver(ABC):
     def __init__(self, name: str, oxygen_level: float):
-        # Validate name
-        if not name or name.isspace():
-            raise ValueError("Diver name cannot be null or empty!")
-
-        # Validate oxygen_level
-        if oxygen_level < 0:
-            raise ValueError("Cannot create diver with negative oxygen level!")
-
         self.name = name
         self.oxygen_level = oxygen_level
         self.catch = []
         self.competition_points = 0.0
         self.has_health_issue = False
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not value or value.isspace():
+            raise ValueError("Diver name cannot be null or empty!")
+        self._name = value
+
+    @property
+    def oxygen_level(self):
+        return self._oxygen_level
+
+    @oxygen_level.setter
+    def oxygen_level(self, value):
+        if value < 0:
+            raise ValueError("Cannot create diver with negative oxygen level!")
+        self._oxygen_level = value
 
     def miss(self, time_to_catch: int):
         # Decrease oxygen level based on the time_to_catch
